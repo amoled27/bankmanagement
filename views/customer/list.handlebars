@@ -1,0 +1,16 @@
+
+{{#each result}}
+    <div class="container">
+        <div class="card card-body mb-2 mt-2">
+            <h4>{{customer_Name}}</h4>
+            <p>
+                <b>Address:</b>{{ customer_address}}</p>
+            <p>
+                <b>ssn:</b>{{ssn}}</p>
+            <p>
+                <b>age:</b>{{age}}</p>
+        </div>
+    </div>
+{{else}}
+    <h4>No Customers found</h4>
+{{/each}}
