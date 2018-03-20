@@ -1,8 +1,28 @@
 <div class="d-flex justify-content-center">
-    <form action="/customer/search" method="post">
+    <form action="/executive/customer/search" method="post">
         <div class="form-group">
             <input type="text" name="customerid" class="form-control">
             <button type="submit" class="btn btn-dark">Search</button>
         </div>
     </form>
 </div>
+
+{{#each result}}
+<div class="d-flex justify-content-center">
+    <div class="container">
+        <div class="card card-body mb-2 mt-2">
+            <h4>{{customer_Name}}</h4>
+            <p>
+                <b>Address:</b>{{ customer_address}}</p>
+            <p>
+                <b>ssn:</b>{{ssn}}</p>
+            <p>
+                <b>age:</b>{{age}}</p>
+                    <a href="/executive/customer/update/{{customer_ID}}" class="btn btn-dark">Update</a>
+                    <a href="/executive/customer/delete" class="btn btn-dark mt-2">Delete </a>
+        </div>
+    </div>
+</div>
+{{else}}
+
+{{/each}}

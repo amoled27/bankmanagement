@@ -4,12 +4,13 @@ const mysql = require('mysql');
 const path = require('path');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const moment = require('moment');
 // const flash = require('connect-flash');
 const port = 5000;
 
 
 //load routes
-
+const executive=require('./routes/executive');
 
 
 //middleware for handlebars
@@ -57,73 +58,7 @@ app.get('/',(req,res)=>{
 app.get('/about',(req,res)=>{
     res.render('about');
 })
-app.get('/executive', (req, res) => {
-    res.render('executive/index');
-})
-app.get('/customer/add', (req, res) => {
-    res.render('customer/add');
-});
-app.post('/customer/add', (req, res) => {
-    con.connect(function (err) {
-        //const sql='insert into customers values('req.body.cname', req.body.address,req.body.ssn,req.body.age);'
-        var sql = 'insert into customers (customer_Name,customer_address,ssn,age) values(?,?,?,?);'
-        var valuearr = [req.body.cname, req.body.address, req.body.ssn, req.body.age]
-        con.query(sql, valuearr, function (err, result) {
-            if (err) throw err;
-            console.log("Result: " + result);
-            res.render('customer/list');
-        });
-    });
-});
-
-app.get('/customer/list', (req, res) => {
-    con.connect(function (err) {
-        var sql = 'select * from customers';
-        con.query(sql, (err, result) => {
-            if (err)
-                throw err;
-            console.log(result);
-            res.render('customer/list', {
-                result: result
-            })
-        })
-
-    })
-})
-
-app.get('/customer/search', (req, res) => {
-            res.render('customer/customersearch');
-})
-app.post('/customer/search', (req,res)=>{
-    con.connect(function (err) {
-        var sql = 'select * from customers where customer_ID=?';
-        var valuearr = [req.body.customerid]
-        
-        con.query(sql,valuearr, (err, result) => {
-            if (err)
-                throw err;
-            console.log(result);
-            res.render('customer/update', {
-                result: result
-            })
-        })
-
-    })
-})
-
-
-app.post('/customer/update/:id', (req, res) => {
-    con.connect(function (err) {
-        //const sql='insert into customers values('req.body.cname', req.body.address,req.body.ssn,req.body.age);'
-        var sql = 'update customers SET customer_Name=? ,customer_address=? ,age=? where customer_ID=?;';
-        var valuearr = [req.body.cname, req.body.address, req.body.age,req.params.id];
-        con.query(sql, valuearr, function (err, result) {
-            if (err) throw err;
-            console.log("Result: " + result);
-            res.render('customer/customersearch');
-        });
-    });
-});
+app.use('/executive',executive);
 app.listen(port,()=>{
     console.log('server started on port 5000');
 });
