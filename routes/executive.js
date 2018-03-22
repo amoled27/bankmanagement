@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const moment = require('moment');
 
 const accntController = require('../controllers/accntController');
+const custController = require('../controllers/customercontroller');
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -246,8 +247,8 @@ router.get('/account/search',(req,res)=>{
 // =========================== difficulty
 router.post('/account/search', (req, res) => {
    var idorssn = req.body.idorssn;
-    var flag = accntController.deactivateAcc(idorssn);
-    console.log(flag);
+    var flag = custController.checkID(idorssn);
+    console.log('flag'+flag);
     if(flag){
         res.redirect('/executive');
     }else{
