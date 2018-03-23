@@ -247,13 +247,20 @@ router.get('/account/search',(req,res)=>{
 // =========================== difficulty
 router.post('/account/search', (req, res) => {
    var idorssn = req.body.idorssn;
-    var flag = custController.checkID(idorssn);
-    console.log('flag'+flag);
+    custController.checkID(idorssn, function (err, flag) {
+        if (err) {
+            return res.status(500).send({
+                error: 'Internal server error'
+            })
+        }
+
     if(flag){
         res.redirect('/executive');
     }else{
         res.redirect('/executive/account/search');
     }
+    })
+    
 });
 
 
